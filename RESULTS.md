@@ -4,7 +4,7 @@ Tool parts that I chose: Part 3, Robot Framework, and Part 4, Cypress
 
 ## Part 0
 - Step 0.1, Chrome version: Google Chrome 158.0.8127.37 (Official Build) (arm64)
-- Step 0.3, ChromeDriver version: TODO, run `~/drivers/chromedriver-mac-arm64/chromedriver --version` (must be 158.0.8127.37)
+- Step 0.3, ChromeDriver version: ChromeDriver 158.0.8127.37 (b8c2be851f62f6a394ec57955d7f31335d7cb6d4-refs/branch-heads/8127@{#1692})
 - Step 0.4, locator of Pizza, Please!: `button[name="pizza-please"]`
 - Step 0.4, locator of Excluded tools: `select` (the only list on the page)
 - Step 0.4, locator of Must be vegetarian: `#default-checkbox`
@@ -23,9 +23,9 @@ Tool parts that I chose: Part 3, Robot Framework, and Part 4, Cypress
 
 ## Part 3: Robot Framework
 - robot --version: Robot Framework 7.5.1 (Python 3.15.1 on darwin)
-- Step 3.2, failure message for the wrong title: TODO
-- Step 3.8, run 1, result, elapsed time and pizza name: TODO
-- Step 3.8, run 2, result, elapsed time and pizza name: TODO
+- Step 3.2, failure message for the wrong title: `Title should have been 'Web Form' but was 'Web form'.` and `1 test, 0 passed, 1 failed`
+- Step 3.8, run 1, result, elapsed time and pizza name: PASS, 1 test, 1 passed, 0 failed, elapsed 00:00:07.026, Lab Pizza 20261124-231746 (tool Scissors, 400 calories per slice)
+- Step 3.8, run 2, result, elapsed time and pizza name: PASS, 1 test, 1 passed, 0 failed, elapsed 00:00:09.058, Lab Pizza 20261124-231755 (tool Pizza cutter, 600 calories per slice)
 
 ## Part 4: Cypress
 - node --version, npm --version and npx cypress version: v24.22.1, 11.19.1, Cypress 16.3.0 (the sheet's 16.2.1 crashed with `* is not a valid URL` between specs on Chrome 158)
@@ -43,7 +43,7 @@ Tool parts that I chose: Part 3, Robot Framework, and Part 4, Cypress
 
 3. A check could read the ingredients of the answer and fail if any of them is meat or fish, for example Prosciutto or Pepperoni. The page does not say which ingredients are vegetarian, so the test needs another source for that. The answer of POST /api/pizza already carries `"vegetarian": true`, so in Cypress the intercept from Step 4.6 can check `expect(response.body.vegetarian).to.be.true`. A stronger oracle would take the ingredient list from the QuickPizza source or ingredients API, where each ingredient is marked vegetarian or not, and check every ingredient of the pizza against it, because the flag only repeats the server's own claim.
 
-4. Cypress waited by itself. Every `cy.get` and `should` retried for up to 10 seconds, so QP-01 needed no explicit wait, and `cy.wait('@pizza')` waited for the real request instead of a fixed time. Robot Framework needed an explicit wait keyword before each check of something that appears late, such as `Wait Until Element Is Visible css:h1` and `Wait Until Page Contains Element id:svelte-announcer`. Cypress was quicker to write and set up, while Robot Framework needed a virtual environment and a ChromeDriver that matches Chrome 158 exactly, but its keywords read like the written test case. The Cypress video and the three screenshots showed each run clearly, with the Command Log next to the page. TODO: after the Robot runs, add how readable log.html was and the elapsed times.
+4. Cypress waited by itself. Every `cy.get` and `should` retried for up to 10 seconds, so QP-01 needed no explicit wait, and `cy.wait('@pizza')` waited for the real request instead of a fixed time. Robot Framework needed an explicit wait keyword before each check of something that appears late, such as `Wait Until Element Is Visible css:h1` and `Wait Until Page Contains Element id:svelte-announcer`. Cypress was quicker to write and set up, while Robot Framework needed a virtual environment and a ChromeDriver that matches Chrome 158 exactly, but its keywords read like the written test case. QP-01 took 7 and 9 seconds in Robot Framework and 11 and 10 seconds in Cypress, so neither tool was clearly faster. The Cypress video and the three screenshots showed each run clearly, with the Command Log next to the page. The Robot log.html was the easier report to read after a run, because each of my keywords opens into the SeleniumLibrary steps inside it, with values such as `${calories} = 600` and the screenshots in place. That value in run 2 also showed that the boundary of 600 calories passes the check, as the test case intends.
 
 5. I would choose Cypress for Project 2. First, it starts and drives Chrome itself, so it needed no ChromeDriver, which in this lab had to match Chrome 158 exactly although Chrome updates every four weeks. Second, its automatic retry removed every hand-written wait from QP-01, and `cy.intercept` let the test check the request and the answer behind the page, including the limit of 600 in the request body. The video of each spec is also ready-made evidence for the project. Its limits are one browser per test and the crash that I hit with Cypress 16.2.1, which updating to 16.3.0 fixed.
 
