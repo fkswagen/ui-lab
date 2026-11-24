@@ -9,17 +9,19 @@ Tool parts that I chose: Part 3, Robot Framework, and Part 4, Cypress
 - Step 0.4, locator of Excluded tools: `select` (the only list on the page)
 - Step 0.4, locator of Must be vegetarian: `#default-checkbox`
 - Step 0.4, locator of Custom Pizza Name: `input#pizza-name` (`#pizza-name` alone also matches the heading of the answer)
-- Step 0.5, pizza name, tool and calories of the run by hand: TODO, run QP-01 by hand in Chrome and fill in
+- Step 0.5, pizza name, tool and calories of the run by hand: Lab Pizza 20261124-231746, tool Scissors, 400 calories per slice
+
+The actual results below come from the run on 24 November 2026 at 23:17, recorded step by step from the Robot Framework log and screenshots in `robot/results/run1`.
 
 | Step | Actual result | Pass or fail |
 |------|---------------|--------------|
-| 1    | TODO          |              |
-| 2    | TODO          |              |
-| 3    | TODO          |              |
-| 4    | TODO          |              |
-| 5    | TODO          |              |
-| 6    | TODO          |              |
-| 7    | TODO          |              |
+| 1    | The heading reads Looking to break out of your pizza routine? | Pass |
+| 2    | Max Calories per Slice, Excluded tools, Must be vegetarian and Custom Pizza Name appear | Pass |
+| 3    | Max Calories per Slice shows 600 (it showed 1000 before), Knife is selected, Must be vegetarian is ticked, and the name box shows Lab Pizza 20261124-231746 | Pass |
+| 4    | The answer shows Name: Lab Pizza 20261124-231746, Tool: Scissors and Calories per slice: 400 | Pass |
+| 5    | The page says Please log in first. | Pass |
+| 6    | Both boxes held admin, and after Sign in the page shows Latest pizza recommendations | Pass |
+| 7    | The list shows Lab Pizza 20261124-231746 (tool=Scissors, ingredients_number=5) (newest), the same tool as in step 4 | Pass |
 
 ## Part 3: Robot Framework
 - robot --version: Robot Framework 7.5.1 (Python 3.15.1 on darwin)
